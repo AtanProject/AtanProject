@@ -1,0 +1,46 @@
+﻿<html>
+<html>
+    <style type=text/css>
+        body{background-color:whitesmoke;}
+
+        .corner{border:2px solid Black;}
+        div.base{background-color:Aqua; text-align:center; margin-left:10%; padding:10px 0 10px 0; width:80%;}
+
+        div.w80pObj{width:80%; margin-left:10%; text-align:center;}
+        div.comment{ background-color:Lime;}
+        div.bMargin10{margin-bottom:10px;}
+        
+
+        div.inblock{display:inline-block;}
+        div.wordObj{width:20%; text-align:center; background-color:Lime;}
+        div#qEng{margin:0 40% 0 10%; }
+
+        div.operater{margin-left:10%; width:80%; background-color:silver;}
+        a.operater{background-color:Red; text-align:center; font-size:200%; display:inline-block; width:20%; margin:10px 0 10px 0;}
+        a#opeLeft{margin:0 40% 0 10%;}
+    </style>
+	<head>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="jquery.corner.js"></script>
+        <script type="text/javascript">
+			//読みこみ完了後に処理
+            jQuery(function () {
+                $(".corner").corner();
+            });
+        </script>
+	</head>
+	<body>
+		<div class='base corner'>
+            <div class='corner w80pObj bMargin10 comment'>正解です or 残念です</div>
+            <div class='bMargin10'>
+                <div class='corner inblock wordObj'>skyscraper</div>
+                <div class='corner inblock wordObj'>高層ビル群</div>
+            </div>
+            <div class='corner w80pObj bMargin10'>意味(英英辞典)</div>
+            <div class='corner w80pObj bMargin10'>例文</div>
+		</div>
+        <div class='operater'>
+            <a class='operater corner' id='opeLeft'>End</a>
+        </div>
+	</body>
+</html>

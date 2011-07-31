@@ -1,0 +1,106 @@
+﻿<html>
+<html>
+	<head>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="jquery.corner.js"></script>
+        <script type="text/javascript">
+			//読みこみ完了後に処理
+            jQuery(function () {
+                $(".corner").corner();
+            });
+        </script>
+
+        <style type="text/css">
+            body{background-color:whitesmoke;}
+
+            div.floatleft{float:left; width:20%; margin-left:10%;}
+            div.floatright{float:right; width:60%; margin-right:5%;}
+            div.floatclear{clear:both;}
+
+            .corner{border:2px solid Black;}
+            a.base{text-align:center; display:block; padding:10px;}
+            
+            .marginTopSmall{margin-top:10px;}
+            .bgcFirst{background-color:Orange;}
+            .bgcSecond{background-color:Red;}
+            .bgcThird{background-color:Aqua;}
+        
+            .boxWidth{margin:0px 10px;}
+            .box{border:2px solid Black; color:White; background-color:Blue;}
+            .firstBox{width:5%;}
+            .secondBox{width:10%;}
+            .thirdBox{width:15%;}
+            .fourthBox{width:20%;}
+            .goalBox{width:25%;}
+            span.fontRed{color:Red; font-size:150%;}
+
+            ul{list-style-type:none; margin:0; padding:0;}
+            .horizontal{display:box; display:-moz-box; display: -webkit-box;}
+            
+            div.wListName{width:50%; background-color:Red;}
+            div.wListTotal{width:20%; background-color:Blue;}
+            div.wListToggle{width:30%; background-color:Green;}
+        </style>
+	</head>
+	<body>
+        <!--左側のメニュー-->
+        <div class='floatleft'>
+            <!--ユーザ情報-->
+            <div class='corner bgcfirst'>
+                <div>ユーザ名</div>
+                <div>アバター</div>
+            </div>
+
+            <!--単語帳管理へ-->
+            <div class='corner marginTopSmall bgcSecond'>単語帳管理へ</div>
+        </div>
+        <!--右側のメニュー-->
+        <div class='floatright'>
+            <!---->
+  		    <div>あなたの学習状況</div>
+		    <a href='http://www.google.com' class='base corner bgcThird'>
+                <ul class='horizontal'>
+                    <li class='box boxWidth firstBox'>Step0</li>
+                    <li class='box boxWidth secondBox'>Step1</li>
+                    <li class='box boxWidth thirdBox'>Step2</li>
+                    <li class='box boxWidth fourthBox'>Step3</li>
+                    <li class='box boxWidth goalBox'>goal!</li>
+                </ul>
+                <ul class='horizontal'>
+                    <li class='boxWidth firstBox'><span class='fontRed'>xxx</span></li>
+                    <li class='boxWidth secondBox'><span class='fontRed'>yyy</span>/xxx</li>
+                    <li class='boxWidth thirdBox'><span class='fontRed'>yyy</span>/xxx</li>
+                    <li class='boxWidth fourthBox'><span class='fontRed'>yyy</span>/xxx</li>
+                    <li class='boxWidth goalBox'><span class='fontRed'>yyy</span>/xxx</li>
+                </ul>
+		    </a>   		    
+            <!---->
+            <div class='marginTopSmall'>学習中の単語帳</div>
+            <ul>
+              <li class='corner bgcThird marginTopSmall'>
+                <div class='horizontal'>
+                    <div class='wListName'>TOEIC600点</div>
+                    <div class='wListTotal'>総語数xxx</div>
+                    <div class='wListToggle'>学習停止ボタン</div>
+                </div>
+              </li>
+              <li class='corner bgcThird marginTopSmall'>
+                <div class='horizontal'>
+                    <div class='wListName'>TOEIC800点</div>
+                    <div class='wListTotal'>総語数xxx</div>
+                    <div class='wListToggle'>学習停止ボタン</div>
+                </div>
+              </li>
+              <li class='corner bgcThird marginTopSmall'>
+                <div class='horizontal'>
+                    <div class='wListName'>TOEIC990点</div>
+                    <div class='wListTotal'>総語数xxx</div>
+                    <div class='wListToggle'>学習停止ボタン</div>
+                </div>
+              </li>
+            </ul>
+        </div>
+        <!--フッタ-->
+        <div class='floatclear'></div>
+	</body>
+</html>

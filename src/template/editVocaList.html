@@ -1,0 +1,145 @@
+﻿<html>
+<html>
+	<head>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="jquery.corner.js"></script>
+        <script type="text/javascript">
+			//読みこみ完了後に処理
+            jQuery(function () {
+                $(".corner").corner();
+            });
+        <!--
+
+        //追加動作
+        function addWord(id){
+            window.alert('動作確認用ダイアログ。id:' + id + 'を追加します')
+            $.post('',{addWordId:id});
+            window.location.reload();
+        }
+
+        //削除動作
+        function delWord(id, word){
+	        if(window.confirm(word + 'を削除します/id:' + id)){
+                $.post('', { dWordId:id});
+                window.location.reload();
+	        }
+        }
+
+        //ポップアップ
+        function popUp(id, name, title){
+            URI = 'editVocaListPopUp.html';
+            URI = URI + '?id=' + id;
+            URI = URI + '&name=' + name;
+            window.alert(URI);
+            subwin = open(URI, title);
+        }
+
+        // -->
+        </script>
+
+        <style type="text/css">
+            body{background-color:whitesmoke;}
+
+            div.floatleft{float:left; width:20%; margin-left:10%;}
+            div.floatright{float:right; width:60%; margin-right:5%;}
+            div.floatclear{clear:both;}
+            
+            .widthMax{width:100%};
+          
+            .marginTopSmall{margin-top:10px;}
+            .bgc1{background-color:Red;}
+            .bgc2{background-color:Orange;}
+            .bgc3{background-color:Aqua;}
+            .bgc4{background-color:Lime;}
+            .bgc99{background-color:White;}
+            
+            .leftBoxL{height:auto; text-align:center; padding:10px 0px; margin:10px 0px;}
+            .leftBoxS{text-align:center; margin:10px 0px;}
+                        
+            .delimiterLine{border-bottom:1px dotted black;}
+            table#includedWordList .left{width:30%; text-align:center;}
+            table#includedWordList .center{width:50%; text-align:center;}
+            table#includedWordList .right{width:20%; text-align:right;}
+
+            ul{list-style-type:none; margin:0; padding:0;}
+        </style>
+	</head>
+	<body>
+        <!--左側の領域-->
+        <div class='floatleft'>
+            <!--ホームへ戻る-->
+            <div class='leftBoxL bgC1'><a>Homeへ</a></div>
+            <hr />
+            <!--編集する単語帳を選択-->
+            <ul>
+                <li class='leftBoxL bgC2'><a>単語帳１</a></li>
+                <li class='leftBoxL bgC3'><a>単語帳２</a></li>
+                <li class='leftBoxL bgC3'><a>単語帳３</a></li>
+                <li class='leftBoxL bgC3'><a>単語帳４</a></li>
+                <li class='leftBoxL bgC3'><a>単語帳５</a></li>
+            </ul>
+
+            <!--単語帳追加-->
+            <div class='leftBoxS bgC4' onclick='popUp(-1,"新規作成","新規単語帳")'>+</div>
+        </div>
+        <!--右側の領域-->
+        <div class='floatright'>
+            <!--単語検索-->
+            <form action="" method="get">
+              <input type="text" name="sWord" />
+              <input type="submit" value="Submit" />
+            </form>
+            <table class='widthMax bgc99'>
+                <!--ここから-->
+                <tr>
+                    <td>単語１</td><td>一番目の単語</td><td rowspan='2' class='bgc1' onclick='addWord(0)'>add</td>
+                </tr>
+                <tr class='delimiterLine'>
+                    <td colspan='2'>例文</td>
+                </tr>
+                <tr><td  colspan='3' class='delimiterLine'></td></tr>
+                <!--ここで１セット-->
+                <tr>
+                    <td>単語２</td><td>ニ番目の単語</td><td rowspan='2' class='bgc1'  onclick='addWord(1)'>add</td>
+                </tr>
+                <tr class='delimiterLine'>
+                    <td>例文</td>
+                </tr>
+            </table>
+
+            <hr />
+
+            <!--単語編集-->
+            <div>単語帳の名前(<span  onclick='popUp(100,"単語帳の名前","名前の変更")'>編集</span>)</div>
+            <table class='widthMax bgc99' id='includedWordList'>
+                <thead>
+                    <tr>
+                        <th class='left'>word</th><th class='center'>japanese</th><th></th>
+                    </tr>
+                    <tr><td  colspan='3' class='delimiterLine'></td></tr>
+                </thead>
+                <tbody>
+                    <!--ここから-->
+                    <tr>
+                        <td class='left word'>単語１</td><td class='center'>一番目の単語</td><td class='right bgc1 deleteBt' onclick='delWord(0,"xxx")'>delete</td>
+                    </tr>
+                    <tr><td  colspan='3' class='delimiterLine'></td></tr>
+                    <!--ここまで１セット-->
+                    <tr>
+                        <td class='left word'>単語２</td><td class='center'>ニ番目の単語</td><td class='right bgc1 deleteBt' onclick='delWord(1,"yyy")'>delete</td>
+                    </tr>
+                    <tr><td  colspan='3' class='delimiterLine'></td></tr>
+                    <tr>
+                        <td class='left word'>単語３</td><td class='center'>三番目の単語</td><td class='right bgc1 deleteBt' onclick='delWord(2,"zzz")'>delete</td>
+                    </tr>
+                    <tr><td  colspan='3' class='delimiterLine'></td></tr>
+                </tbody>
+            </table>
+
+            <!--単語帳を削除-->
+            <div></div>
+        </div>
+        <!--フッタ-->
+        <div class='floatclear'></div>
+	</body>
+</html>

@@ -1,0 +1,55 @@
+﻿<html>
+<html>
+	<head>
+        <style type="text/css">
+            body{background-color:whitesmoke;}
+            .button{background-color:White; width:100px;}
+        </style>
+
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="jquery.corner.js"></script>
+        <script type="text/javascript">
+            function getUrlVars() {
+                var vars = [], hash;
+                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                for (var i = 0; i < hashes.length; i++) {
+                    hash = hashes[i].split('=');
+                    vars.push(hash[0]);
+                    vars[hash[0]] = hash[1];
+                }
+                return vars;
+            }
+
+            jQuery(function () {
+                $('#listName').val('test');
+                $('#listName').val(decodeURI(getUrlVars()["name"]));
+
+                $('#decide').click(
+                    function () {
+                        newName = $('listName').val();
+                        Id = getUrlVars()["id"];
+                        //hogehogeは単語帳の名前変更APIのURL(成功メッセージとかは表示すべきかも)
+                        $.post('hogehoge', { listName: newName, listId: Id });
+                        window.opener.location.reload();
+                        window.close();
+                    }
+                );
+
+                $('#cancel').click(
+                    function () {
+                        window.close();
+                    }
+                );
+            });
+        </script>
+	</head>
+	<body>
+        <div>
+            <input type="text" id="listName" />
+        </div>
+        <div>
+            <button class='button' id='decide'>決定</button>
+            <button class='button' id='cancel'>キャンセル</button>
+        </div>
+	</body>
+</html>

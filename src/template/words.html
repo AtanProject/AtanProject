@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; chaset=UTF-8">
+  </head>
+  <body>
+    {{wordlist_key}}
+    <div>
+      <form method="get" action="/words">
+        <select name="wordlist_key">
+          {% for wordlist in wordlists %}
+          {% ifequal wordlist.name wordlist_name %}
+          <option value="{{ wordlist.key }}" selected="selected">{{ wordlist.name }}</option>
+          {% else %}
+          <option value="{{ wordlist.key }}">{{ wordlist.name }}</option>
+          {% endifequal %}
+          {% endfor %}
+        </select>
+        <input type="submit" value="単語帳を変更" />
+      </form>
+    </div>
+    <div>
+      <table>
+        <tr>
+          <th>スペル</th>
+          <th>意味</th>
+        </tr>
+        {% if words %}
+        {% for word in words %}
+        <tr>
+          <td>{{ word.word.spelling|escape }}</td>
+          <td>{{ word.word.meaning|escape }}</td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+      </table>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+﻿<html>
+<html>
+	<head>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="jquery.corner.js"></script>
+        <script type="text/javascript">
+			//読みこみ完了後に処理
+            jQuery(function () {
+                $(".corner").corner();
+            });
+        </script>
+
+        <style type="text/css">
+            body{background-color:whitesmoke;}
+
+            .corner{border:2px solid Black;}
+            div.base{background-color:Aqua; text-align:center; margin-left:10%; padding:10px 0 10px 0; width:80%;}
+        
+            .boxWidth{display:inline-block; margin:0px 10px;}
+            .box{border:2px solid Black; color:White; background-color:Blue;}
+            div.firstBox{width:5%;}
+            div.secondBox{width:10%;}
+            div.thirdBox{width:15%;}
+            div.fourthBox{width:20%;}
+            div.goalBox{width:25%;}
+            span.fontRed{color:Red; font-size:200%;}
+            span.fontGreen{color:Green; font-size:200%;}
+
+            div.operater{margin-left:10%; width:80%; background-color:silver;}
+            a.operater{background-color:Red; text-align:center; font-size:200%; display:inline-block; width:20%; margin:10px 0 10px 0;}
+            a#opeLeft{margin:0 40% 0 10%;}
+        </style>
+	</head>
+	<body>
+		<div class='base corner'>
+    		<div>今回の学習結果</div>
+            <div>
+                <div class='box boxWidth firstBox'>Step0</div>
+                <div class='box boxWidth secondBox'>Step1</div>
+                <div class='box boxWidth thirdBox'>Step2</div>
+                <div class='box boxWidth fourthBox'>Step3</div>
+                <div class='box boxWidth goalBox'>goal!</div>
+            </div>
+            <div>
+                <!-- +zz:Step1～3から帰ってきてしまった単語数, xxx:学習後のStep0総数 -->
+                <div class='boxWidth firstBox'><span class='fontRed'>+yy</span>(xxx)</div>
+                <!-- +yy:Step0から登ってきた単語数, xxx:学習後のStep1総数 -->
+                <div class='boxWidth secondBox'><span class='fontGreen'>+yy</span>(xxx)</div>
+                <!-- +yy:Step1から登ってきた単語数, xxx:学習後のStep2総数 -->
+                <div class='boxWidth thirdBox'><span class='fontGreen'>+yy</span>(xxx)</div>
+                <!-- +yy:Step2から登ってきた単語数, xxx:学習後のStep3総数 -->
+                <div class='boxWidth fourthBox'><span class='fontGreen'>+yy</span>(xxx)</div>
+                <!-- +yy:Step3から登ってきた単語数, xxx:学習後のgoal総数 -->
+                <div class='boxWidth goalBox'><span class='fontGreen'>+yy</span>(xxx)</div>
+            </div>
+		</div>
+        <div class='operater'>
+            <a class='operater corner' id='opeLeft'>Back to Home</a>
+        </div>
+	</body>
+</html>
