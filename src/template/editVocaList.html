@@ -4,22 +4,59 @@
         <script type="text/javascript">
         <!--
         //変数系//
-        //検索で受け取った単語リスト(現在は借りの物を設定)
+        //単語帳のリスト
+        var listOfWordList = [
+        	{
+        		"ListName":"単語帳 part1",
+        		"Id":"list1"
+        	},
+        	{
+        		"ListName":"単語帳 part2",
+        		"Id":"list2"
+        	}
+        ];
+        
+        //検索で受け取った単語リスト(現在は借りに設定)
         var vocabularyJSON = [
         	{
         		"Word":"first",
-        		"Id":"1",
+        		"Id":"word1",
         		"Meaning":"（はじめの単語の意味）",
         	},
         	{
         		"Word":"second",
-        		"Id":"2",
+        		"Id":"word2",
         		"Meaning":"（二番目の単語の意味）",
 			}
         ];
         
+        //選択された単語リスト(現在は借りに設定)
+        var includedWordInListJSON = [
+        	{
+        		"Word":"X",
+        		"Id":"word_X",
+        		"Meaning":"XはXですよ",
+        	},
+        	{
+        		"Word":"Y",
+        		"Id":"word_Y",
+        		"Meaning":"YはYですよ",
+			}
+        ];
+        
+        //選択されたリストのID
+        var selectedListId = 0;;
+        
 		//読みこみ完了後に処理
         jQuery(function () {
+        	//単語帳リスト表示
+        	for(var i = 0; i < listOfWordList.length; i++){
+	            listElement = $('<li></li>').addClass('leftBoxL bgC3').attr('id', listOfWordList[i].Id).bind("click", {Id: listOfWordList[i].Id}, selectList);
+        		listNameElement = $('<span></span>').attr('class','name').html(listOfWordList[i].ListName);
+        		listNameEditButtonElement = $('<img>').attr('src','img/pencil.gif').bind("click", {Id: listOfWordList[i].Id}, editListName);
+   	            $('ul#ListOfWordList').append( listElement.append(listNameElement).append(listNameEditButtonElement) );
+        	}
+        	
           	//追加ボタンの動作登録
        		$('#addWordList').click(function(){
        		    //!! newList作成API呼び出し
@@ -28,9 +65,36 @@
             	//DOM作成して、フォーカスを当てる
             	addList(id);
           	});
+
+        	//リスト初期選択
+        	$('li#' + listOfWordList[0].Id).trigger("click");
         });
         
         //単語帳関係//
+        //単語帳選択
+        function selectList(e){
+        	id = e.data.Id;
+        	//!!api呼び出し
+        	
+        		//表示書き換え 左メニュー
+        		$('li#' + selectedListId).attr('Class','leftBoxL bgC3');
+        		$('li#' + id).attr('Class','leftBoxL bgC2');
+        		selectedListId = id;
+        		
+        		//!!表示書き換え　右メニュー
+        		$('tbody#includedWord').empty();
+	        	for(var i = 0; i < includedWordInListJSON.length; i++){
+	        		wordElement = $('<td></td>').attr('class','left word').html(includedWordInListJSON[i].Word);
+	        		meanElement = $('<td></td>').attr('class','center').html(includedWordInListJSON[i].Meaning);
+	        		delButtonElement = $('<td></td>').attr('class','right bgc1 deleteBt').html('delete').bind("click", {Id:includedWordInListJSON[i].Id ,Word:includedWordInListJSON[i].Word , ListId:id}, deleteWord)
+	        		firstLineElement = $('<tr></tr>').append(wordElement).append(meanElement).append(delButtonElement);
+	        		secondLineElement = $('<tr></tr>').append( $('<td></td>').attr('colspan','3').attr('class','delimiterLine') );
+	        		
+	        		$('tbody#includedWord').append(firstLineElement);
+	        		$('tbody#includedWord').append(secondLineElement);
+	        	}
+        }
+        
         //単語帳リストの表示を作成
         function addList(id){
         	//DOM作成して、フォーカスを当てる
@@ -94,11 +158,14 @@
         }
         //単語の削除動作
         function deleteWord(e){
-        	id = e.data.id;
-        	word = e.data.word;
+        	id = e.data.Id;
+        	word = e.data.Word;
+        	listId = e.data.ListId;
 	        if(window.confirm(word + 'を削除します/id:' + id)){
-                $.post('', { dWordId:id});
-                window.location.reload();
+	        	//API呼び出し
+	        		//成功したら
+	        		
+                //window.location.reload();
 	        }
         }
 
@@ -191,20 +258,6 @@
                     <tr><td  colspan='3' class='delimiterLine'></td></tr>
                 </thead>
                 <tbody id='includedWord'>
-                    <!--ここから-->
-                    <tr>
-                        <td class='left word'>単語１</td><td class='center'>一番目の単語</td><td class='right bgc1 deleteBt' onclick='delWord(0,"xxx")'>delete</td>
-                    </tr>
-                    <tr><td  colspan='3' class='delimiterLine'></td></tr>
-                    <!--ここまで１セット-->
-                    <tr>
-                        <td class='left word'>単語２</td><td class='center'>ニ番目の単語</td><td class='right bgc1 deleteBt' onclick='delWord(1,"yyy")'>delete</td>
-                    </tr>
-                    <tr><td  colspan='3' class='delimiterLine'></td></tr>
-                    <tr>
-                        <td class='left word'>単語３</td><td class='center'>三番目の単語</td><td class='right bgc1 deleteBt' onclick='delWord(2,"zzz")'>delete</td>
-                    </tr>
-                    <tr><td  colspan='3' class='delimiterLine'></td></tr>
                 </tbody>
             </table>
 
