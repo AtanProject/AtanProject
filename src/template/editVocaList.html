@@ -84,14 +84,7 @@
         		//!!表示書き換え　右メニュー
         		$('tbody#includedWord').empty();
 	        	for(var i = 0; i < includedWordInListJSON.length; i++){
-	        		wordElement = $('<td></td>').attr('class','left word').html(includedWordInListJSON[i].Word);
-	        		meanElement = $('<td></td>').attr('class','center').html(includedWordInListJSON[i].Meaning);
-	        		delButtonElement = $('<td></td>').attr('class','right bgc1 deleteBt').html('delete').bind("click", {Id:includedWordInListJSON[i].Id ,Word:includedWordInListJSON[i].Word , ListId:id}, deleteWord)
-	        		firstLineElement = $('<tr></tr>').append(wordElement).append(meanElement).append(delButtonElement);
-	        		secondLineElement = $('<tr></tr>').append( $('<td></td>').attr('colspan','3').attr('class','delimiterLine') );
-	        		
-	        		$('tbody#includedWord').append(firstLineElement);
-	        		$('tbody#includedWord').append(secondLineElement);
+   					addWordUI(includedWordInListJSON[i], selectedListId);
 	        	}
         }
         
@@ -145,16 +138,22 @@
 
         	//追加API呼び出し
 
-			//API呼び出しが通ったら        	
-	        	//情報準備        	
-    	    	word = $('<td></td>').attr('class','left word').html(wordInfo.Word);
-        		japanese = $('<td></td>').attr('class','center').html(wordInfo.Meaning);
-        		deleteButton = $('<td></td>').attr('class','right bgc1 deleteBt').html('delete').bind('click', {id:wordInfo.Id , word:wordInfo.Word}, deleteWord);
-        		delimiterLine = $('<td></td>').attr('colspan','3').attr('class','delimiterLine')
+			//API呼び出しが通ったら
+				//表示
+				addWordUI(wordInfo, selectedListId);
+        }
+        //単語帳へ見た目上の追加
+        function addWordUI(wordInfo, ListId){
+       		wordElement = $('<td></td>').attr('class','left word').html(wordInfo.Word);
+       		meanElement = $('<td></td>').attr('class','center').html(wordInfo.Meaning);
+       		delButtonElement = $('<td></td>').attr('class','right bgc1 deleteBt').html('delete').bind("click", {Id:wordInfo.Id ,Word:wordInfo.Word , ListId:ListId}, deleteWord)
+       		trElementBase = $('<tr></tr>').attr('calss','includedWordInList').attr('id', wordInfo.Id);
+       		firstLineElement = trElementBase.append(wordElement).append(meanElement).append(delButtonElement);
+       		secondLineElement = trElementBase.append( $('<td></td>').attr('colspan','3').attr('class','delimiterLine') );
 
-	        	//追加実行
-    	    	$('tbody#includedWord').append(	$('<tr></tr>').append(word).append(japanese).append(deleteButton) );
-        		$('tbody#includedWord').append(	$('<tr></tr>').append(delimiterLine) );
+			tbodyElement = $('tbody#includedWord');
+       		tbodyElement.append(firstLineElement);
+       		tbodyElement.append(secondLineElement);
         }
         //単語の削除動作
         function deleteWord(e){
@@ -164,6 +163,7 @@
 	        if(window.confirm(word + 'を削除します/id:' + id)){
 	        	//API呼び出し
 	        		//成功したら
+	        		$('tbody#includedWord tr#' + id).remove();
 	        		
                 //window.location.reload();
 	        }
