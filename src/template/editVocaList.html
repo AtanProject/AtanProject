@@ -17,7 +17,7 @@
         ];
         
         //検索で受け取った単語リスト(現在は借りに設定)
-        var vocabularyJSON = [
+        var searchedWords = [
         	{
         		"Word":"first",
         		"Id":"word1",
@@ -57,7 +57,7 @@
    	            $('ul#ListOfWordList').append( listElement.append(listNameElement).append(listNameEditButtonElement) );
         	}
         	
-          	//追加ボタンの動作登録
+          	//単語帳追加ボタンの動作登録
        		$('#addWordList').click(function(){
        		    //!! newList作成API呼び出し
 				id = "list" + Math.floor(Math.random()*1000);
@@ -68,6 +68,12 @@
 
         	//リスト初期選択
         	$('li#' + listOfWordList[0].Id).trigger("click");
+        	
+        	//検索ボタンイベント登録
+        	$('div#searchButton').click(function(){
+        		qWord = $('input#searchQWord').val();
+        		searchWord(qWord);
+        	})
         });
         
         //単語帳関係//
@@ -131,11 +137,34 @@
            	);
 		}
 
+		//単語検索//
+		function searchWord(qWord){
+			//検索API呼び出し
+			
+			//API呼び出し結果を反映
+				tableElement = $('table#searchedWordList');
+				tableElement.empty();
+
+				for(var i = 0; i < searchedWords.length; i++){
+					wordElement = $('<td></td>').html(searchedWords[i].Word);
+					meanElement = $('<td></td>').html(searchedWords[i].Meaning);
+					addButtonElement = $('<td></td>').attr('class','bgc1').attr('rowspan','2').html('add').bind("click", searchedWords[i], addWord);
+					firstLine = $('<tr></tr>').append(wordElement).append(meanElement).append(addButtonElement);
+					
+					secondLine = $('<tr></tr>').attr('class','delimiterLine').append(
+						$('<td></td>').attr('colspan','2').html('例文')
+					);
+					
+					tableElement.append(firstLine);
+					tableElement.append(secondLine);
+	        	}
+				
+		}
+
 		//単語帳の中身//
         //単語の追加:引数は何番目の単語かを表す数値
-        function addWord(num){
-           	wordInfo = vocabularyJSON[num];
-
+        function addWord(e){
+           	wordInfo = e.data;
         	//追加API呼び出し
 
 			//API呼び出しが通ったら
@@ -146,7 +175,7 @@
         function addWordUI(wordInfo, ListId){
        		wordElement = $('<td></td>').attr('class','left word').html(wordInfo.Word);
        		meanElement = $('<td></td>').attr('class','center').html(wordInfo.Meaning);
-       		delButtonElement = $('<td></td>').attr('class','right bgc1 deleteBt').html('delete').bind("click", {Id:wordInfo.Id ,Word:wordInfo.Word , ListId:ListId}, deleteWord)
+       		delButtonElement = $('<td></td>').attr('class','right bgc1 deleteBt').html('delete').bind("click", {Id:wordInfo.Id ,Word:wordInfo.Word , ListId:ListId}, deleteWord);
        		trElementBase = $('<tr></tr>').attr('calss','includedWordInList').attr('id', wordInfo.Id);
        		firstLineElement = trElementBase.append(wordElement).append(meanElement).append(delButtonElement);
        		secondLineElement = trElementBase.append( $('<td></td>').attr('colspan','3').attr('class','delimiterLine') );
@@ -224,12 +253,10 @@
         <!--右側の領域-->
         <div class='floatright'>
             <!--単語検索-->
-            <form action="" method="get">
-              <input type="text" name="sWord" />
-              <input type="submit" value="Submit" />
-            </form>
-            <table class='widthMax bgc99' id=''>
-                <!--ここから-->
+            <input type='text' name='text' id='searchQWord'></input>
+            <div id='searchButton'>search</div>
+            <table class='widthMax bgc99' id='searchedWordList'>
+                <!--ここから
                 <tr>
                     <td>単語１</td><td>一番目の単語</td><td rowspan='2' class='bgc1' onclick='addWord(0)'>add</td>
                 </tr>
@@ -238,12 +265,6 @@
                 </tr>
                 <tr><td  colspan='3' class='delimiterLine'></td></tr>
                 <!--ここで１セット-->
-                <tr>
-                    <td>単語２</td><td>ニ番目の単語</td><td rowspan='2' class='bgc1'  onclick='addWord(1)'>add</td>
-                </tr>
-                <tr class='delimiterLine'>
-                    <td>例文</td>
-                </tr>
             </table>
 
             <hr />
