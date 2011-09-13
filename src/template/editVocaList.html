@@ -98,10 +98,11 @@
         function addList(id){
         	//DOM作成して、フォーカスを当てる
             $('ul#ListOfWordList').append(
-            	$('<li></li>').addClass('leftBoxL bgC3').attr('id', id).append(
+            	$('<li></li>').addClass('leftBoxL bgC3').attr('id', id).bind("click", {Id: id}, selectList).append(
             		$('<input>').attr('type','text').attr('id',id).attr('name','text').attr('value','新しい単語帳')
 				)
             );
+            $('ul#ListOfWordList li#' + id).trigger("click");
 			$('input#' + id).focus();
             	 	
             //作成されたDOMにフォーカス切れでの動作を追加
