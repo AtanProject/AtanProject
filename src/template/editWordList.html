@@ -1,6 +1,6 @@
 ﻿<html>
 	<head>
-        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="/js/jquery.js"></script>
         <script type="text/javascript">
         <!--
         //変数系//
@@ -53,7 +53,7 @@
         	for(var i = 0; i < listOfWordList.length; i++){
 	            listElement = $('<li></li>').addClass('leftBoxL bgC3').attr('id', listOfWordList[i].Id).bind("click", {Id: listOfWordList[i].Id}, selectList);
         		listNameElement = $('<span></span>').attr('class','name').html(listOfWordList[i].ListName);
-        		listNameEditButtonElement = $('<img>').attr('src','img/pencil.gif').bind("click", {Id: listOfWordList[i].Id}, editListName);
+        		listNameEditButtonElement = $('<img>').attr('src','/img/pencil.gif').bind("click", {Id: listOfWordList[i].Id}, editListName);
    	            $('ul#ListOfWordList').append( listElement.append(listNameElement).append(listNameEditButtonElement) );
         	}
         	
@@ -134,7 +134,7 @@
            	$('li#' + id).empty();
            	$('li#' + id).append($('<span></span>').attr('class','name').html(newName));
            	$('li#' + id).append(
-           		$('<img>').attr('src','img/pencil.gif').bind("click", {Id: id}, editListName)
+           		$('<img>').attr('src','/img/pencil.gif').bind("click", {Id: id}, editListName)
            	);
 		}
 

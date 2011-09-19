@@ -2,13 +2,15 @@ from app.handlers.main_page import MainPage
 from app.handlers.guestbook import Guestbook
 from app.handlers.words import Words
 from app.handlers.init import Init
+from app.handlers.editwordlist import Editwordlist
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 application = webapp.WSGIApplication([('/', MainPage),
                                       ('/init', Init),
                                       ('/sign', Guestbook),
-                                      ('/words', Words)
+                                      ('/words', Words),
+                                      ('/editwordlist', Editwordlist),
                                       ],
                                      debug=True)
 
