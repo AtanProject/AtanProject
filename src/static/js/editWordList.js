@@ -58,15 +58,15 @@
        		    //!! newList作成API呼び出し
 				id = "list" + Math.floor(Math.random()*1000);
 
-          		$.post(
-			    	"/api/makewordlist",
-			    	null,
-			    	function(data, status) {
-			    		id = data.ListId;
-	        	    	addList(id);
-					},
-				    "json"
-				);
+          		//$.post(
+			    //	"/api/makewordlist",
+			    //	null,
+			    //	function(data, status) {
+			    //		id = data.ListId;
+	        	//    	addList(id);
+				//	},
+				//    "json"
+				//);
 
             	//DOM作成して、フォーカスを当てる
             	addList(id);
