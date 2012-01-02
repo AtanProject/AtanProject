@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from google.appengine.ext import webapp
 from google.appengine.api import users
 from app.models.word import WordList
@@ -73,4 +75,16 @@ class SearchWords(webapp.RequestHandler):
     # where `id' is a Word key, but probably a WordMember key seems to be
     # more useful.
     def get(self):
-        pass
+        json = u'''
+[{"Id": "aaa111",
+  "Word": "restrain",
+  "Meaning": "抑制する"},
+ {"Id": "bbb222",
+  "Word": "accompany",
+  "Meaning": "〜を伴う"},
+ {"Id": "ccc333",
+  "Word": "facilitate",
+  "Meaning": "〜を手伝う"}]'''
+
+        self.response.headers['Content-Type'] = 'application/json; charset=utf-8'
+        self.response.out.write(json)
