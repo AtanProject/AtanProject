@@ -19,7 +19,7 @@ class MakeWordList(webapp.RequestHandler):
         wordlist.put()
 
         listid = wordlist.key()
-        json = "{\"ListId\": %s}" % listid
+        json = '{"ListId": "%s"}' % listid
         self.response.headers["Content-Type"] = "application/json"
         self.response.out.write(json)
 
