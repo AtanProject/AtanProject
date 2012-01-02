@@ -11,7 +11,7 @@
         	}
         ];
         
-        //検索で受け取った単語リスト(現在は借りに設定)
+        //検索で受け取った単語リスト(テスト用の初期設定)
         var searchedWords = [
         	{
         		"Word":"first",
@@ -54,24 +54,7 @@
         	}
         	
           	//単語帳追加ボタンの動作登録          	
-       		$('#addWordList').click(function(){
-       		    //!! newList作成API呼び出し
-				id = "list" + Math.floor(Math.random()*1000);
-
-          		//$.post(
-			    //	"/api/makewordlist",
-			    //	null,
-			    //	function(data, status) {
-			    //		id = data.ListId;
-	        	//    	addList(id);
-				//	},
-				//    "json"
-				//);
-
-            	//DOM作成して、フォーカスを当てる
-            	addList(id);
-            	
-          	});
+       		$('#addWordList').click(addList);
 
         	//リスト初期選択
         	$('li#' + listOfWordList[0].Id).trigger("click");
@@ -102,18 +85,30 @@
         }
         
         //単語帳リストの表示を作成
-        function addList(id){
-        	//DOM作成して、フォーカスを当てる
-            $('ul#ListOfWordList').append(
-            	$('<li></li>').addClass('leftBoxL bgC3').attr('id', id).bind("click", {Id: id}, selectList).append(
-            		$('<input>').attr('type','text').attr('id',id).attr('name','text').attr('value','新しい単語帳')
-				)
-            );
-            $('ul#ListOfWordList li#' + id).trigger("click");
-			$('input#' + id).focus();
+        function addList(){
+        	//POSTでId発行してもらう
+	   		$.post(
+		    	"/api/makeWordList",
+		    	null,
+		    	function(data, status) {
+		    		//結果反映
+			    	id = data.ListId;
+	        	    
+   	            	//DOM作成して、フォーカスを当てる
+		            $('ul#ListOfWordList').append(
+        	    	$('<li></li>').addClass('leftBoxL bgC3').attr('id', id).bind("click", {Id: id}, selectList).append(
+            				$('<input>').attr('type','text').attr('id',id).attr('name','text').attr('value','新しい単語帳')
+						)
+		            );
+            		$('ul#ListOfWordList li#' + id).trigger("click");
+					$('input#' + id).focus();
             	 	
-            //作成されたDOMにフォーカス切れでの動作を追加
-            $('input#' + id).bind("blur", {Id: id}, fixListName);
+            		//作成されたDOMにフォーカス切れでの動作を追加
+            		$('input#' + id).bind("blur", {Id: id}, fixListName);
+				},
+				"json"
+			);
+
         }     
         //リスト名編集モード
         function editListName(e){
@@ -148,25 +143,30 @@
 		//単語検索//
 		function searchWord(qWord){
 			//検索API呼び出し
-			
-			//API呼び出し結果を反映
-				tableElement = $('table#searchedWordList');
-				tableElement.empty();
+			$.get(
+				"api/searchWords",
+				function(data){
+					//API呼び出し結果を反映
+					searchedWords = data
 
-				for(var i = 0; i < searchedWords.length; i++){
-					wordElement = $('<td></td>').html(searchedWords[i].Word);
-					meanElement = $('<td></td>').html(searchedWords[i].Meaning);
-					addButtonElement = $('<td></td>').attr('class','bgc1').attr('rowspan','2').html('add').bind("click", searchedWords[i], addWord);
-					firstLine = $('<tr></tr>').append(wordElement).append(meanElement).append(addButtonElement);
+					tableElement = $('table#searchedWordList');
+					tableElement.empty();
+
+					for(var i = 0; i < searchedWords.length; i++){
+						wordElement = $('<td></td>').html(searchedWords[i].Word);
+						meanElement = $('<td></td>').html(searchedWords[i].Meaning);
+						addButtonElement = $('<td></td>').attr('class','bgc1').attr('rowspan','2').html('add').bind("click", searchedWords[i], addWord);
+						firstLine = $('<tr></tr>').append(wordElement).append(meanElement).append(addButtonElement);
 					
-					secondLine = $('<tr></tr>').attr('class','delimiterLine').append(
-						$('<td></td>').attr('colspan','2').html('例文')
-					);
+						secondLine = $('<tr></tr>').attr('class','delimiterLine').append(
+							$('<td></td>').attr('colspan','2').html('例文')
+						);
 					
-					tableElement.append(firstLine);
-					tableElement.append(secondLine);
-	        	}
-				
+						tableElement.append(firstLine);
+						tableElement.append(secondLine);
+	        		}
+				}
+			);				
 		}
 
 		//単語帳の中身//
