@@ -11,11 +11,15 @@ def getWordList(user,id):
 
 class MakeWordList(webapp.RequestHandler):
     def post(self):
-        # FIXME: get value from POST body
         user = users.get_current_user()
 
         wordlist = WordList(owner=user)
         wordlist.put()
+
+        listid = wordlist.key()
+        json = "{\"ListId\": %s}" % listid
+        self.response.headers["Content-Type"] = "application/json"
+        self.response.out.write(json)
 
 class EditList(webapp.RequestHandler):
     def post(self):
